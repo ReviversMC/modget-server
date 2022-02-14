@@ -18,9 +18,9 @@ public class ModController {
 	}
 
 
-	@GetMapping("mod/{id}")
-	public RestModPackage getMod(@PathVariable String id) {
-		return modService.getMod(id);
+	@GetMapping("package/{packageId}")
+	public RestModPackage getPackage(@PathVariable String packageId) {
+		return modService.getPackage(packageId);
 	}
 
 }
