@@ -1,0 +1,41 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.github.reviversmc.modget.manifests'
+version = '0.0.0'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+    maven {
+        url = "https://mvnrepository.com/"
+    }
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Modget Manifest API
+    implementation("com.github.ReviversMC:modget-manifest-api:${project.modget_manifest_api_version}")
+    // Modget Library
+    implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
+
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}")
+
+    // BeanUtils for copying field values from one object to another
+    implementation "commons-beanutils:commons-beanutils:${project.beanutils_version}"
+
+    implementation("org.apache.commons:commons-text:${project.commons_text_version}")
+}
+
+test {
+	useJUnitPlatform()
+}
