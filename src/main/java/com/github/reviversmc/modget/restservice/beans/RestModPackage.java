@@ -3,6 +3,7 @@ package com.github.reviversmc.modget.restservice.beans;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.reviversmc.modget.manifests.spec4.api.data.common.ModLoader;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersion;
 import com.github.reviversmc.modget.manifests.spec4.impl.data.manifest.main.BasicModManifest;
 
@@ -10,7 +11,7 @@ public class RestModPackage extends BasicModManifest {
 	private String packageId;
 	private String publisher;
 	private String modId;
-	private List<String> loaders;
+	private List<ModLoader> loaders;
 
 	public RestModPackage(String packageId) {
 		super(null, null);
@@ -54,11 +55,11 @@ public class RestModPackage extends BasicModManifest {
 	}
 
 
-	public List<String> getLoaders() {
+	public List<ModLoader> getLoaders() {
 		return loaders;
 	}
 
-	public void setLoaders(List<String> loaders) {
+	public void setLoaders(List<ModLoader> loaders) {
         if (loaders == null) {
             this.loaders.clear();
             return;
