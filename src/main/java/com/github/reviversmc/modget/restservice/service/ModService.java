@@ -38,7 +38,7 @@ public class ModService {
 	}
     
 
-	public RestModPackage getPackage(String packageId) {
+	public List<ModVersionVariant> getModVersionVariantsForPackage(String packageId) {
         SearchMode searchMode = new SearchModeBuilder()
                 .enablePackageIdSearch(true)
                 .build();
@@ -61,6 +61,12 @@ public class ModService {
                 } catch (NoCompatibleVersionException ignored) {}
             }
         }
+        return modVersionVariants;
+	}
+
+
+	public RestModPackage getPackage(String packageId) {
+        List<ModVersionVariant> modVersionVariants = getModVersionVariantsForPackage(packageId);
         ModManifest modManifest = modVersionVariants.get(0).getParentVersion().getParentManifest();
         ModPackage modPackage = modManifest.getParentPackage();
 
@@ -131,7 +137,7 @@ public class ModService {
             }
             this.setFeaturedVersions(deduplicatedFeaturedVersions);
         }};
-	}
+    }
 
 
     private List<ModVersionVariant> extractModVersionVariants(
