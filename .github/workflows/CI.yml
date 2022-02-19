@@ -18,10 +18,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: ShadowJar modget-auth
+      - name: ShadowJar modget-server
         run: ./gradlew :shadowJar
-      - name: Upload modget-auth
+      - name: Upload modget-server
         uses: actions/upload-artifact@v2
         with:
-          name: modget-auth-dev
+          name: modget-server-dev
           path: build/libs/*.jar
