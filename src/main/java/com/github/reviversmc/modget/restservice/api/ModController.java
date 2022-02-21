@@ -20,10 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ModController {
 	private final ModService modService;
 
-	public ModController() {
-		this.modService = new ModService();
+	public ModController(ModService modService) {
+		this.modService = modService;
 	}
-
 
 	@GetMapping("package/{packageId}")
 	public RestModPackage getPackage(@PathVariable String packageId) {
