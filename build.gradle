@@ -28,6 +28,8 @@ dependencies {
     implementation("com.github.ReviversMC:modget-manifest-api:${project.modget_manifest_api_version}")
     // Modget Library
     implementation("com.github.ReviversMC:modget-lib:${project.modget_lib_version}")
+    // Modget Auth
+    implementation('com.github.reviversmc:modget-auth:8869fe3140')
 
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}")
 
