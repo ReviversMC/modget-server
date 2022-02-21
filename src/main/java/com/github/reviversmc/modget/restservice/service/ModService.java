@@ -1,10 +1,7 @@
 package com.github.reviversmc.modget.restservice.service;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.github.reviversmc.modget.library.exception.NoCompatibleVersionException;
 import com.github.reviversmc.modget.library.util.ModVersionVariantUtils;
@@ -115,7 +112,7 @@ public class ModService {
                     }
                 }
                 // No beta or full release has been found, so we have to add an alpha
-                if (nonAlphaFound == false) {
+                if (!nonAlphaFound) {
                     featuredVersions.add(latestAlpha);
                 }
             }
@@ -144,7 +141,7 @@ public class ModService {
         Pair<List<ModVersionVariant>, List<Exception>> versionVariantsAndExceptions
     ) {
         List<ModVersionVariant> versionVariants = versionVariantsAndExceptions.getLeft();
-        versionVariants.removeIf(variant -> variant == null);
+        versionVariants.removeIf(Objects::isNull);
         return versionVariants;
     }
 }
