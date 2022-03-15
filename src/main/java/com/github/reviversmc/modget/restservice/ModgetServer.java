@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ModgetManifestRestApiApplication {
+public class ModgetServer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ModgetManifestRestApiApplication.class, args);
+		SpringApplication.run(ModgetServer.class, args);
 	}
 
 }
