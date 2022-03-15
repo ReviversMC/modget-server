@@ -12,6 +12,7 @@ import com.github.reviversmc.modget.library.util.search.ModSearcher;
 import com.github.reviversmc.modget.library.util.search.SearchMode;
 import com.github.reviversmc.modget.library.util.search.SearchModeBuilder;
 import com.github.reviversmc.modget.manifests.spec4.api.data.ManifestRepository;
+import com.github.reviversmc.modget.manifests.spec4.api.data.lookuptable.LookupTableEntry;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.main.ModManifest;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersion;
 import com.github.reviversmc.modget.manifests.spec4.api.data.manifest.version.ModVersionVariant;
@@ -20,6 +21,7 @@ import com.github.reviversmc.modget.manifests.spec4.api.data.mod.ModPackage;
 import com.github.reviversmc.modget.manifests.spec4.impl.data.BasicManifestRepository;
 import com.github.reviversmc.modget.restservice.beans.RestModPackage;
 import com.github.reviversmc.modget.restservice.beans.RestModVersion;
+import com.github.reviversmc.modget.restservice.beans.SearchResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ModService {
 	ManifestRepository repo = new BasicManifestRepository(0, "https://raw.githubusercontent.com/ReviversMC/modget-manifests");
+    List<RestModPackage> restModPackages = new ArrayList<>(50);
 
 	public ModService() {
 		try {
@@ -35,6 +38,28 @@ public class ModService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        try {
+            for (LookupTableEntry entry : repo.getOrDownloadLookupTable().getOrDownloadEntries()) {
+                // if (entry.equals(repo.getOrDownloadLookupTable().getOrDownloadEntries().get(50))) break;
+                try {
+                    entry.getOrDownloadPackages().forEach(pack -> restModPackages.add(new RestModPackage(pack.getPackageId()) {{
+                        try {
+                            BeanUtils.copyProperties(this, pack);
+                            BeanUtils.copyProperties(this, entry);
+                            BeanUtils.copyProperties(this, pack.getOrDownloadManifests(Arrays.asList(repo)).get(0));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }}
+                        
+                    ));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
     
 
@@ -146,5 +171,17 @@ public class ModService {
         List<ModVersionVariant> versionVariants = versionVariantsAndExceptions.getLeft();
         versionVariants.removeIf(variant -> variant == null);
         return versionVariants;
+    }
+
+
+    public SearchResponse searchMods(String query) {
+        if (query == "") {
+
+        }
+        return new SearchResponse(
+                restModPackages,
+                0,
+                restModPackages.size(),
+                restModPackages.size());
     }
 }
