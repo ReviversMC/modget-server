@@ -21,7 +21,7 @@ jobs:
       - name: ShadowJar modget-server
         run: ./gradlew :shadowJar
       - name: Upload modget-server
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: modget-server-dev
           path: build/libs/*.jar
